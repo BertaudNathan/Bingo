@@ -1,0 +1,21 @@
+Settings:
+  RandomItems:
+    Blacklisted:
+      List:
+        - BARRIER
+          - BEDROCK
+          - COMMAND_BLOCK
+          - CHAIN_COMMAND_BLOCK
+          - REPEATING_COMMAND_BLOCK
+          - STRUCTURE_BLOCK
+          - STRUCTURE_VOID
+          - JIGSAW
+          - SPAWNER
+          - END_PORTAL_FRAME
+          - KNOWLEDGE_BOOK
+          - DEBUG_STICK
+          - PLAYER_HEAD
+          - PLAYER_WALL_HEAD
+          - COMMAND_BLOCK_MINECART
+          - DRAGON_EGG
+          - LIGHT

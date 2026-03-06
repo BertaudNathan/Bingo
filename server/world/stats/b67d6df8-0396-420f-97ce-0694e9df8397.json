@@ -1,0 +1,32 @@
+{
+  "stats": {
+    "minecraft:killed_by": {
+      "minecraft:zombie": 2
+    },
+    "minecraft:used": {
+      "minecraft:dark_oak_leaves": 1
+    },
+    "minecraft:mined": {
+      "minecraft:short_grass": 1
+    },
+    "minecraft:custom": {
+      "minecraft:time_since_rest": 33968,
+      "minecraft:walk_one_cm": 6985,
+      "minecraft:leave_game": 10,
+      "minecraft:mob_kills": 2,
+      "minecraft:damage_taken": 741,
+      "minecraft:play_time": 94757,
+      "minecraft:damage_dealt": 133,
+      "minecraft:jump": 39,
+      "minecraft:time_since_death": 20501,
+      "minecraft:sprint_one_cm": 5415,
+      "minecraft:fall_one_cm": 950,
+      "minecraft:total_world_time": 94757,
+      "minecraft:fly_one_cm": 6534,
+      "minecraft:crouch_one_cm": 105,
+      "minecraft:sneak_time": 46,
+      "minecraft:deaths": 2
+    }
+  },
+  "DataVersion": 4671
+}

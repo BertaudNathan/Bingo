@@ -1,0 +1,4 @@
+name: Bingo
+version: '1.0-SNAPSHOT'
+main: zibouliman.zibouli.bingo.Bingo
+api-version: '1.21'
