@@ -1,0 +1,2 @@
+# Bingo
+Plugin bingo multijoueur
