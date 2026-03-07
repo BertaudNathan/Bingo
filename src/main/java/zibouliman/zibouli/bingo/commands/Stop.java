@@ -14,9 +14,16 @@ public class Stop implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NonNull CommandSender sender, @NonNull Command command, @NonNull String label, @NonNull String[] args) {
+        // Réinitialiser les anciennes variables (pour compatibilité)
         Bingo.BingoMaterial = null;
         Bingo.BingoWinCondition = null;
         Bingo.BingoDamageCause = null;
+
+        // Réinitialiser les nouvelles variables
+        Bingo.BingoObjectives.clear();
+        Bingo.PlayersCompleted.clear();
+        Bingo.PlayerObjectivesCompleted.clear();
+
         Helpers.resetScoreboard();
         var old = Bukkit.getWorlds().getFirst();
 

@@ -16,24 +16,32 @@ import zibouliman.zibouli.bingo.commands.Stop;
 import zibouliman.zibouli.bingo.handlers.DeathHandler;
 import zibouliman.zibouli.bingo.handlers.ObtainHandler;
 import zibouliman.zibouli.bingo.handlers.PlayerRespawnHandler;
+import zibouliman.zibouli.bingo.utils.BingoObjective;
 import zibouliman.zibouli.bingo.utils.WinCondition;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.random.RandomGenerator;
 import java.util.stream.Collectors;
 
 import static zibouliman.zibouli.bingo.helpers.Helpers.getDisplayNameForMaterial;
 
 public final class Bingo extends JavaPlugin {
+    // Anciennes variables pour compatibilité (deprecated)
+    @Deprecated
     public static Material BingoMaterial;
-    public static Scoreboard ScoreBoard;
+    @Deprecated
     public static EntityDamageEvent.DamageCause BingoDamageCause;
+    @Deprecated
     public static WinCondition BingoWinCondition;
+
+    // Nouvelles variables pour multi-objectifs
+    public static List<BingoObjective> BingoObjectives = new ArrayList<>();
+    public static Scoreboard ScoreBoard;
     public static World BingoWorld;
+    public static Set<UUID> PlayersCompleted = new HashSet<>();
+    // Map pour suivre les objectifs complétés par chaque joueur : UUID -> Set<index d'objectif>
+    public static Map<UUID, Set<Integer>> PlayerObjectivesCompleted = new HashMap<>();
 
 
     @Override

@@ -8,6 +8,8 @@ import org.bukkit.scoreboard.Scoreboard;
 import zibouliman.zibouli.bingo.Bingo;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.bukkit.Bukkit.getLogger;
@@ -46,8 +48,44 @@ public class Helpers {
          Bingo.ScoreBoard.getObjectives().forEach(objective -> objective.unregister());
     }
 
+    /**
+     * Marque un objectif comme complété pour un joueur et vérifie si tous les objectifs sont terminés
+     * @param player Le joueur qui a complété l'objectif
+     * @param objectiveIndex L'index de l'objectif complété dans la liste BingoObjectives
+     * @return true si le joueur a complété tous les objectifs, false sinon
+     */
+    public static boolean markObjectiveCompleted(Player player, int objectiveIndex) {
+        // Initialiser le set d'objectifs pour ce joueur s'il n'existe pas
+        Bingo.PlayerObjectivesCompleted.putIfAbsent(player.getUniqueId(), new HashSet<>());
+
+        Set<Integer> completedObjectives = Bingo.PlayerObjectivesCompleted.get(player.getUniqueId());
+
+        // Ajouter l'objectif complété
+        completedObjectives.add(objectiveIndex);
+
+        // Afficher la progression
+        int totalObjectives = Bingo.BingoObjectives.size();
+        int completedCount = completedObjectives.size();
+
+        player.sendMessage("§a✓ Objectif " + (objectiveIndex + 1) + " complété ! §7(" + completedCount + "/" + totalObjectives + ")");
+
+        // Vérifier si tous les objectifs sont complétés
+        if (completedCount >= totalObjectives) {
+            Win(player);
+            return true;
+        }
+
+        return false;
+    }
+
     public static void Win(Player player){
-        getServer().broadcastMessage(String.format("%s à gagné",player.getName()));
+        // Ajouter le joueur à la liste des joueurs qui ont terminé
+        if (!Bingo.PlayersCompleted.add(player.getUniqueId())) {
+            // Le joueur a déjà gagné, ne rien faire
+            return;
+        }
+
+        getServer().broadcastMessage("§6§l" + player.getName() + " §ea terminé tous les objectifs du BINGO !");
         getServer().dispatchCommand(getServer().getConsoleSender(),"stop-bingo");
     }
 

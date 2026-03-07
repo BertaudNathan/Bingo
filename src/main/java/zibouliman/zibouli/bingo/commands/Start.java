@@ -17,6 +17,7 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.jspecify.annotations.NonNull;
 import zibouliman.zibouli.bingo.Bingo;
 import zibouliman.zibouli.bingo.helpers.Helpers;
+import zibouliman.zibouli.bingo.utils.BingoObjective;
 import zibouliman.zibouli.bingo.utils.PlayerResetUtils;
 import zibouliman.zibouli.bingo.utils.WinCondition;
 
@@ -28,22 +29,45 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 import static org.bukkit.Bukkit.*;
-import static zibouliman.zibouli.bingo.helpers.Helpers.GetWinConditionString;
 import static zibouliman.zibouli.bingo.helpers.Helpers.getDisplayNameForMaterial;
 
 public class Start implements CommandExecutor {
     @Override
     public boolean onCommand(@NonNull CommandSender commandSender, @NonNull Command command, @NonNull String s, @NonNull String[] strings) {
-        startGame();
+        int numberOfObjectives = 1; // Par défaut : 1 objectif
+
+        if (strings.length > 0) {
+            try {
+                numberOfObjectives = Integer.parseInt(strings[0]);
+                if (numberOfObjectives < 1) {
+                    commandSender.sendMessage("§cLe nombre d'objectifs doit être au moins 1.");
+                    return false;
+                }
+                if (numberOfObjectives > 10) {
+                    commandSender.sendMessage("§cLe nombre d'objectifs ne peut pas dépasser 10.");
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                commandSender.sendMessage("§cArgument invalide. Utilisez: /start-bingo <nombre>");
+                return false;
+            }
+        }
+
+        startGame(numberOfObjectives);
         return true;
     }
 
     public Material BingoMaterial;
 
-    public void startGame() {
+    public void startGame(int numberOfObjectives) {
         // Réinitialiser les achievements et spawns de tous les joueurs
         PlayerResetUtils.resetForGameStart();
         Helpers.resetScoreboard();
+
+        // Réinitialiser la liste des joueurs qui ont terminé
+        Bingo.PlayersCompleted.clear();
+        // Réinitialiser les objectifs complétés par chaque joueur
+        Bingo.PlayerObjectivesCompleted.clear();
 
         // Active le respawn automatique instantané sur tous les mondes existants.
         Bukkit.getWorlds().forEach(world -> {
@@ -51,17 +75,37 @@ public class Start implements CommandExecutor {
         });
 
         // Plugin startup logic
-        Bukkit.getLogger().info("plugin initialisé");
-        GetWinCondition();
+        Bukkit.getLogger().info("plugin initialisé avec " + numberOfObjectives + " objectif(s)");
+        GenerateObjectives(numberOfObjectives);
+        InitScoreboardForPlayer();
+
+        // Broadcast des objectifs
+        getServer().broadcastMessage("§6========== OBJECTIFS DU BINGO ==========");
+        for (int i = 0; i < Bingo.BingoObjectives.size(); i++) {
+            getServer().broadcastMessage("§e" + (i + 1) + ". §f" + GetObjectiveString(Bingo.BingoObjectives.get(i)));
+        }
+        getServer().broadcastMessage("§6=========================================");
     }
 
 
     private void InitScoreboardForPlayer(){
         getServer().getOnlinePlayers().forEach(p->{
             Bingo.ScoreBoard.registerNewTeam(p.getDisplayName());
-            var obj =  Bingo.ScoreBoard.registerNewObjective("DorinoBingo", p.getDisplayName());
+            var obj =  Bingo.ScoreBoard.registerNewObjective("DorinoBingo", "dummy");
             obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-            obj.getScore(GetWinConditionString()).setScore(0);
+            obj.setDisplayName("§6§lBINGO");
+
+            // Afficher tous les objectifs dans le scoreboard
+            int score = 0;
+            for (BingoObjective objective : Bingo.BingoObjectives) {
+                String objectiveText = GetObjectiveString(objective);
+                // Limiter la longueur pour éviter les problèmes d'affichage
+                if (objectiveText.length() > 40) {
+                    objectiveText = objectiveText.substring(0, 37) + "...";
+                }
+                obj.getScore("§7" + objectiveText).setScore(score++);
+            }
+
             p.setScoreboard(Bingo.ScoreBoard);
         });
     }
@@ -120,27 +164,77 @@ public class Start implements CommandExecutor {
         return availableKillMethods.get(index);
     }
 
-    private void GetWinCondition(){
-        var rd = new Random();
-        var random = rd.nextInt(100);
-        if (random < 20){
-            Bingo.BingoWinCondition = WinCondition.DEATH;
-            Bingo.BingoDamageCause = GetRandomKillMethod();
-            getServer().broadcastMessage("Méthode de kill : " + Bingo.BingoDamageCause.name());
-            var plugin = ((Bingo) getPluginManager().getPlugin("Bingo"));
-            if (plugin != null) {
-                Bukkit.getLogger().info("initalisation correcte : " + Bingo.BingoDamageCause.name());
-                InitScoreboardForPlayer();
-            }
-        } else {
-            Bingo.BingoMaterial = GetRandomObtainableItem();
-            Bingo.BingoWinCondition = WinCondition.OBTAIN_ITEM;
-            String displayName = getDisplayNameForMaterial(Bingo.BingoMaterial);
-            var plugin = ((Bingo) getPluginManager().getPlugin("Bingo"));
-            if (plugin != null) {
-                Bukkit.getLogger().info("initalisation correcte : " + displayName);
-                InitScoreboardForPlayer();
+    private void GenerateObjectives(int numberOfObjectives) {
+        Bingo.BingoObjectives.clear();
+
+        for (int i = 0; i < numberOfObjectives; i++) {
+            var rd = new Random();
+            var random = rd.nextInt(100);
+
+            if (random < 20) { // 20% chance de mort
+                EntityDamageEvent.DamageCause damageCause = GetRandomKillMethod();
+                Bingo.BingoObjectives.add(new BingoObjective(WinCondition.DEATH, damageCause));
+                Bukkit.getLogger().info("Objectif " + (i + 1) + " : Mort par " + damageCause.name());
+            } else { // 80% chance d'item
+                Material material = GetRandomObtainableItem();
+                Bingo.BingoObjectives.add(new BingoObjective(WinCondition.OBTAIN_ITEM, material));
+                String displayName = getDisplayNameForMaterial(material);
+                Bukkit.getLogger().info("Objectif " + (i + 1) + " : Obtenir " + displayName);
             }
         }
+
+        // Mettre à jour les variables pour compatibilité avec l'ancien code
+        if (!Bingo.BingoObjectives.isEmpty()) {
+            BingoObjective firstObjective = Bingo.BingoObjectives.get(0);
+            Bingo.BingoWinCondition = firstObjective.getType();
+            if (firstObjective.getType() == WinCondition.OBTAIN_ITEM) {
+                Bingo.BingoMaterial = firstObjective.getMaterial();
+            } else if (firstObjective.getType() == WinCondition.DEATH) {
+                Bingo.BingoDamageCause = firstObjective.getDamageCause();
+            }
+        }
+    }
+
+    private String GetObjectiveString(BingoObjective objective) {
+        switch (objective.getType()) {
+            case OBTAIN_ITEM:
+                return "Obtenir : " + getDisplayNameForMaterial(objective.getMaterial());
+            case DEATH:
+                return GetDeathDescription(objective.getDamageCause());
+            default:
+                return "Objectif inconnu";
+        }
+    }
+
+    private String GetDeathDescription(EntityDamageEvent.DamageCause cause) {
+        String descr;
+        switch (cause) {
+            case FALL:
+                descr = "Mourir en tombant";
+                break;
+            case LAVA:
+                descr = "Mourir dans la lave";
+                break;
+            case DROWNING:
+                descr = "Mourir noyé";
+                break;
+            case ENTITY_ATTACK:
+                descr = "Mourir tué par une entité";
+                break;
+            case PROJECTILE:
+                descr = "Mourir par projectile";
+                break;
+            case SUFFOCATION:
+                descr = "Mourir étouffé";
+                break;
+            case FIRE:
+            case FIRE_TICK:
+                descr = "Mourir brûlé";
+                break;
+            default:
+                descr = "Mourir de : " + cause.name();
+                break;
+        }
+        return descr;
     }
 }

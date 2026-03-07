@@ -4,8 +4,8 @@ main: zibouliman.zibouli.bingo.Bingo
 api-version: '1.21'
 commands:
   start-bingo :
-    description: "Démarre le bingo"
-    usage: /start-bingo
+    description: "Démarre le bingo avec un nombre d'objectifs optionnel"
+    usage: /start-bingo [nombre_objectifs]
   stop-bingo:
     description: "Termine le bingo"
     usage: /stop-bingo
