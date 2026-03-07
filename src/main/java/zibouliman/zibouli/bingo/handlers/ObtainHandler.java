@@ -11,6 +11,7 @@ import zibouliman.zibouli.bingo.Bingo;
 import java.net.http.WebSocket;
 
 import static org.bukkit.Bukkit.getServer;
+import static zibouliman.zibouli.bingo.helpers.Helpers.getDisplayNameForMaterial;
 
 public class ObtainHandler implements Listener {
 
@@ -27,9 +28,12 @@ public class ObtainHandler implements Listener {
         if (player.getInventory().getItem(newSlot) == null){
             return;
         }
-        Bukkit.getLogger().info(player.getInventory().getItem(newSlot).getData().toString());
-        if (Bingo.BingoMaterial != null && Bingo.BingoMaterial.equals(player.getInventory().getItem(newSlot).getData().toString())){
+        Bukkit.getLogger().info("dans la main : " + getDisplayNameForMaterial(player.getInventory().getItem(newSlot).getType()));
+        Bukkit.getLogger().info("a trouvver : " +getDisplayNameForMaterial(Bingo.BingoMaterial) );
+
+        if (getDisplayNameForMaterial(Bingo.BingoMaterial) != null &&  getDisplayNameForMaterial(player.getInventory().getItem(newSlot).getType()).equals(getDisplayNameForMaterial(Bingo.BingoMaterial))){
             getServer().broadcastMessage(String.format("%s à gagné",player.getName()));
+            getServer().dispatchCommand(getServer().getConsoleSender(),"stop-bingo");
         }
     }
 }

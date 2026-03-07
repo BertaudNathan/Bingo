@@ -19,4 +19,4 @@ if %ERRORLEVEL% NEQ 0 (
 
 echo Demarrage du serveur Spigot avec 4 Go de RAM...
 cd "server"
-java -Xmx4096M -Xms4096M -jar spigot-1.20.1.jar nogui
+java -Xmx4096M -Xms4096M -jar spigot-1.21.11.jar nogui

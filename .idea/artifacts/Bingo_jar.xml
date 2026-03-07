@@ -3,7 +3,7 @@
     <output-path>$PROJECT_DIR$/out/artifacts/Bingo_jar</output-path>
     <root id="archive" name="Bingo.jar">
       <element id="module-output" name="Bingo.main" />
-      <element id="file-copy" path="$PROJECT_DIR$/src/main/resources/plugin.yml" />
+      <element id="file-copy" path="$USER_HOME$/IdeaProjects/BingoMC/src/main/resources/plugin.yml" />
     </root>
   </artifact>
 </component>

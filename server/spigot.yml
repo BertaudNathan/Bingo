@@ -17,6 +17,8 @@ settings:
   sample-count: 12
   netty-threads: 4
   attribute:
+    maxAbsorption:
+      max: 2048.0
     maxHealth:
       max: 2048.0
     movementSpeed:
@@ -41,6 +43,7 @@ messages:
   restart: Server is restarting
 world-settings:
   default:
+    unload-frozen-chunks: false
     below-zero-generation-in-existing-chunks: true
     verbose: true
     max-tnt-per-tick: 100
