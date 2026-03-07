@@ -1,10 +1,9 @@
 package zibouliman.zibouli.bingo;
-import org.bukkit.Material;
-import org.bukkit.WorldCreator;
+import org.bukkit.*;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
@@ -14,8 +13,10 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Scoreboard;
 import zibouliman.zibouli.bingo.commands.Start;
 import zibouliman.zibouli.bingo.commands.Stop;
+import zibouliman.zibouli.bingo.handlers.DeathHandler;
 import zibouliman.zibouli.bingo.handlers.ObtainHandler;
 import zibouliman.zibouli.bingo.handlers.PlayerRespawnHandler;
+import zibouliman.zibouli.bingo.utils.WinCondition;
 
 import java.io.File;
 import java.util.Arrays;
@@ -30,6 +31,9 @@ import static zibouliman.zibouli.bingo.helpers.Helpers.getDisplayNameForMaterial
 public final class Bingo extends JavaPlugin {
     public static Material BingoMaterial;
     public static Scoreboard ScoreBoard;
+    public static EntityDamageEvent.DamageCause BingoDamageCause;
+    public static WinCondition BingoWinCondition;
+    public static World BingoWorld;
 
 
     @Override
@@ -38,7 +42,14 @@ public final class Bingo extends JavaPlugin {
         getCommand("stop-bingo").setExecutor(new Stop());
         new ObtainHandler(this);
         new PlayerRespawnHandler(this);
+        new DeathHandler(this);
+
         Bingo.ScoreBoard = Bukkit.getScoreboardManager().getMainScoreboard();
+
+        // Active le respawn automatique instantané sur tous les mondes par défaut.
+        Bukkit.getWorlds().forEach(world -> {
+            world.setGameRule(GameRule.IMMEDIATE_RESPAWN, true);
+        });
     }
 
 

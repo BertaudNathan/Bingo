@@ -10,13 +10,18 @@ if %ERRORLEVEL% NEQ 0 (
 
 echo Copie du plugin vers le serveur...
 copy "build\libs\Bingo-1.0-SNAPSHOT.jar" "server\plugins\Bingo.jar"
-
 if %ERRORLEVEL% NEQ 0 (
     echo Erreur lors de la copie du JAR
     pause
     exit /b 1
 )
-
+if not exist "server\plugins\Bingo" mkdir "server\plugins\Bingo"
+copy "build\resources\main\config.yaml" "server\plugins\Bingo\config.yaml"
+if %ERRORLEVEL% NEQ 0 (
+    echo Erreur lors de la copie de la config.yaml
+    pause
+    exit /b 1
+)
 echo Demarrage du serveur Spigot avec 4 Go de RAM...
 cd "server"
 java -Xmx4096M -Xms4096M -jar spigot-1.21.11.jar nogui

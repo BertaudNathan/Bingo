@@ -3,11 +3,9 @@ version: '1.0-SNAPSHOT'
 main: zibouliman.zibouli.bingo.Bingo
 api-version: '1.21'
 commands:
-  start_bingo :
+  start-bingo :
     description: "Démarre le bingo"
-    usage: /start_bingo
-  stop_bingo :
-    description: "Stop le bingo"
-    usage: /stop_bingo
-
-
+    usage: /start-bingo
+  stop-bingo:
+    description: "Termine le bingo"
+    usage: /stop-bingo

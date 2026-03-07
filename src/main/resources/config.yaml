@@ -59,3 +59,12 @@ Settings:
           - INTERACTION
           - MINECART_WITH_COMMAND_BLOCK
           - MINECART_WITH_SPAWNER
+  RandomKillMethods:
+    Whitelisted:
+      List:
+          - FALL
+          - ENTITY_ATTACK
+          - PROJECTILE
+          - LAVA
+          - DROWNING
+          - SUFFOCATION
