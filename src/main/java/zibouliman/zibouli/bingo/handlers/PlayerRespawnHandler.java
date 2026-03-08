@@ -2,9 +2,11 @@ package zibouliman.zibouli.bingo.handlers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.ItemStack;
 import zibouliman.zibouli.bingo.Bingo;
 
 public class PlayerRespawnHandler implements Listener {
@@ -25,8 +27,12 @@ public class PlayerRespawnHandler implements Listener {
 
         // Réapplique un état joueur sain après le respawn côté serveur/client.
         Bukkit.getScheduler().runTask(plugin, () -> {
+            if (Bingo.BingoWorld == null){
+                return;
+            }
             player.teleport(Bingo.BingoWorld.getSpawnLocation());
             player.setRespawnLocation(Bingo.BingoWorld.getSpawnLocation());
+            player.getInventory().setItem(0,new ItemStack(Material.BREAD,64));
         });
 
         Bukkit.getLogger().info(String.format("Joueur %s respawn dans le monde %s",

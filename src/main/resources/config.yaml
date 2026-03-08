@@ -59,6 +59,9 @@ Settings:
           - INTERACTION
           - MINECART_WITH_COMMAND_BLOCK
           - MINECART_WITH_SPAWNER
+          - ORE
+      Silk_Touch:
+          -
   RandomKillMethods:
     Whitelisted:
       List:
