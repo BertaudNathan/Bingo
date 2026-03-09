@@ -29,7 +29,7 @@ import static zibouliman.zibouli.bingo.helpers.Helpers.getDisplayNameForMaterial
 public final class Bingo extends JavaPlugin {
     // Anciennes variables pour compatibilité (deprecated)
     @Deprecated
-    public static Material BingoMaterial;
+    public static List<Material> BingoMaterial;
     @Deprecated
     public static EntityDamageEvent.DamageCause BingoDamageCause;
     @Deprecated

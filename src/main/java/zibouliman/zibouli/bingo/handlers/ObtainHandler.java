@@ -11,6 +11,7 @@ import zibouliman.zibouli.bingo.utils.BingoObjective;
 import zibouliman.zibouli.bingo.utils.WinCondition;
 
 import java.net.http.WebSocket;
+import java.util.List;
 
 import static org.bukkit.Bukkit.getServer;
 import static zibouliman.zibouli.bingo.helpers.Helpers.getDisplayNameForMaterial;
@@ -38,17 +39,17 @@ public class ObtainHandler implements Listener {
         }
 
         Material heldItem = player.getInventory().getItem(newSlot).getType();
-        Bukkit.getLogger().info("dans la main : " + getDisplayNameForMaterial(heldItem));
+        //Bukkit.getLogger().info("dans la main : " + getDisplayNameForMaterial(heldItem));
 
         // Vérifier tous les objectifs de type OBTAIN_ITEM
         for (int i = 0; i < Bingo.BingoObjectives.size(); i++) {
             BingoObjective objective = Bingo.BingoObjectives.get(i);
 
             if (objective.getType() == WinCondition.OBTAIN_ITEM) {
-                Material targetMaterial = objective.getMaterial();
+                List<Material> targetMaterial = objective.getMaterial();
                 Bukkit.getLogger().info("a trouver : " + getDisplayNameForMaterial(targetMaterial));
 
-                if (heldItem == targetMaterial) {
+                if (targetMaterial.contains(heldItem) ) {
                     // Vérifier si cet objectif n'a pas déjà été complété par ce joueur
                     if (Bingo.PlayerObjectivesCompleted.containsKey(player.getUniqueId()) &&
                         Bingo.PlayerObjectivesCompleted.get(player.getUniqueId()).contains(i)) {

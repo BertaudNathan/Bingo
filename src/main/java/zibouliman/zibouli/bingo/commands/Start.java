@@ -12,6 +12,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.jspecify.annotations.NonNull;
@@ -22,10 +23,7 @@ import zibouliman.zibouli.bingo.utils.PlayerResetUtils;
 import zibouliman.zibouli.bingo.utils.WinCondition;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.bukkit.Bukkit.*;
@@ -110,16 +108,23 @@ public class Start implements CommandExecutor {
         });
     }
 
-    private Material GetRandomObtainableItem() {
+    private List<Material> GetRandomObtainableItem() {
         Bingo plugin = (Bingo) getPluginManager().getPlugin("Bingo");
+
+        File configfile = new File(plugin.getDataFolder(), "config.yaml");
+
         if (plugin == null) {
             Bukkit.getLogger().severe("Plugin Bingo non trouvé!");
-            return Material.STONE;
+            ArrayList<Material> li = new ArrayList<>();
+            li.add(Material.STONE);
+            return li;
         }
-        File configfile = new File(plugin.getDataFolder(), "config.yaml");
+
         if (!configfile.exists()) {
             Bukkit.getLogger().severe("Fichier config.yaml introuvable à: " + configfile.getAbsolutePath());
-            return Material.STONE;
+            ArrayList<Material> li = new ArrayList<>();
+            li.add(Material.STONE);
+            return li;
         }
         var config = YamlConfiguration.loadConfiguration(configfile);
         List<String> itemList = config.getStringList("Settings.RandomItems.Blacklisted.List");
@@ -127,13 +132,54 @@ public class Start implements CommandExecutor {
 
         List<Material> availableMaterials = Arrays.stream(Material.values())
                 .filter(Material -> {return Material.isItem()|| Material.isBlock();})
-                .filter(material -> !itemList.contains(material.name()))
+                .filter(material -> !itemList.contains(material.name()) || getDisplayNameForMaterial(material).toLowerCase().contains("spawn"))
                 .collect(Collectors.toList());
 
         if (availableMaterials.isEmpty()) {
             availableMaterials = Collections.singletonList(Material.STONE);
         }
-        return availableMaterials.get(new Random().nextInt(availableMaterials.size()));
+
+        return CheckMaterial(availableMaterials.get(new Random().nextInt(availableMaterials.size())));
+    }
+
+    private List<Material> CheckMaterial(Material mat){
+        Bingo plugin = (Bingo) getPluginManager().getPlugin("Bingo");
+
+        File configfile = new File(plugin.getDataFolder(), "config.yaml");
+
+        var config = YamlConfiguration.loadConfiguration(configfile);
+        List<String> itemList = config.getStringList("Settings.RandomItems.Blacklisted.Silk_Touch");
+        List<Material> silktouchmat = Arrays.stream(Material.values())
+                .filter(Material -> {return Material.isItem()|| Material.isBlock();})
+                .filter(material -> itemList.contains(material.name()))
+                .collect(Collectors.toList());
+        if (silktouchmat.contains(mat) && getServer().getRecipesFor(new ItemStack(mat)).size() == 0){
+            return GetRandomObtainableItem(); // on rechoisis magl
+        }
+        if(getDisplayNameForMaterial(mat).toLowerCase().contains("egg")){
+            ArrayList<Material> l = new ArrayList<Material>();
+            l.add(Material.EGG);
+            l.add(Material.BLUE_EGG);
+            l.add(Material.BROWN_EGG);
+            return l;
+        }
+        if(getDisplayNameForMaterial(mat).toLowerCase().contains("banner")){
+            var color = mat.getData().getName().split("_")[0];
+            ArrayList<Material> l = new ArrayList<Material>();
+            l.add(Material.getMaterial(color+"_BANNER"));
+            l.add(Material.getMaterial(color+"_WALL_BANNER"));
+            return l;
+        }
+        if(getDisplayNameForMaterial(mat).toLowerCase().contains("disc")){
+            ArrayList<Material> l = new ArrayList<Material>();
+           Arrays.stream(Material.values()).toList().forEach(x->{
+                if (x.name().toLowerCase().contains("music_disc")){
+                    l.add(x);
+                }
+            });
+            return l;
+        }
+        return Collections.singletonList(mat);
     }
 
     private EntityDamageEvent.DamageCause GetRandomKillMethod() {
@@ -176,7 +222,7 @@ public class Start implements CommandExecutor {
                 Bingo.BingoObjectives.add(new BingoObjective(WinCondition.DEATH, damageCause));
                 Bukkit.getLogger().info("Objectif " + (i + 1) + " : Mort par " + damageCause.name());
             } else { // 80% chance d'item
-                Material material = GetRandomObtainableItem();
+                List<Material> material = GetRandomObtainableItem();
                 Bingo.BingoObjectives.add(new BingoObjective(WinCondition.OBTAIN_ITEM, material));
                 String displayName = getDisplayNameForMaterial(material);
                 Bukkit.getLogger().info("Objectif " + (i + 1) + " : Obtenir " + displayName);

@@ -9,6 +9,7 @@ import zibouliman.zibouli.bingo.Bingo;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,27 +22,61 @@ public class Helpers {
      * Retourne le nom localisé d'un item Material
      * Par exemple: DIAMOND_PICKAXE -> "Diamond Pickaxe"
      */
-    public static String getDisplayNameForMaterial(Material material) {
+    public static String getDisplayNameForMaterial(List<Material> material) {
+        var str = "";
         if (material == null) {
             return null;
         }
-        var itemStack = new org.bukkit.inventory.ItemStack(material);
-        var meta = itemStack.getItemMeta();
+        for (Material m : material) {
+            var itemStack = new org.bukkit.inventory.ItemStack(m);
+            var meta = itemStack.getItemMeta();
 
-        if (meta != null && meta.hasDisplayName()) {
-            return meta.getDisplayName();
+            if (meta != null && meta.hasDisplayName()) {
+                return meta.getDisplayName();
+            }
+
+            // Fallback: convertir le nom technique en nom lisible
+            String name = material.toString()
+                    .replace("_", " ")
+                    .toLowerCase();
+
+            // Capitaliser la première lettre de chaque mot
+            str += Arrays.stream(name.split(" "))
+                    .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
+                    .collect(Collectors.joining(" "));
+            if (material.get(material.size() - 2) != m){
+                str += "/";
+            }
+        }
+        return str;
+
+    }
+
+    public static String getDisplayNameForMaterial(Material material) {
+        var str = "";
+        if (material == null) {
+            return null;
         }
 
-        // Fallback: convertir le nom technique en nom lisible
-        String name = material.toString()
-                .replace("_", " ")
-                .toLowerCase();
+            var itemStack = new org.bukkit.inventory.ItemStack(material);
+            var meta = itemStack.getItemMeta();
 
-        // Capitaliser la première lettre de chaque mot
-        return Arrays.stream(name.split(" "))
-                .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
-                .collect(Collectors.joining(" "));
-    }
+            if (meta != null && meta.hasDisplayName()) {
+                return meta.getDisplayName();
+            }
+
+            // Fallback: convertir le nom technique en nom lisible
+            String name = material.toString()
+                    .replace("_", " ")
+                    .toLowerCase();
+
+            // Capitaliser la première lettre de chaque mot
+            return  Arrays.stream(name.split(" "))
+                    .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
+                    .collect(Collectors.joining(" "));
+        }
+
+
 
     public static void resetScoreboard() {
          Bingo.ScoreBoard.getTeams().forEach(team -> team.unregister());
