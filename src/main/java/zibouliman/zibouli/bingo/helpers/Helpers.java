@@ -32,11 +32,11 @@ public class Helpers {
             var meta = itemStack.getItemMeta();
 
             if (meta != null && meta.hasDisplayName()) {
-                return meta.getDisplayName();
+                str += meta.getDisplayName();
             }
 
             // Fallback: convertir le nom technique en nom lisible
-            String name = material.toString()
+            String name = m.toString()
                     .replace("_", " ")
                     .toLowerCase();
 
@@ -44,7 +44,8 @@ public class Helpers {
             str += Arrays.stream(name.split(" "))
                     .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1))
                     .collect(Collectors.joining(" "));
-            if (material.get(material.size() - 2) != m){
+            getLogger().info(str);
+            if (material.get(material.size() - 1) != m){
                 str += "/";
             }
         }
@@ -103,7 +104,7 @@ public class Helpers {
         int completedCount = completedObjectives.size();
 
         player.sendMessage("§a✓ Objectif " + (objectiveIndex + 1) + " complété ! §7(" + completedCount + "/" + totalObjectives + ")");
-
+        getServer().broadcastMessage("§l✓ Objectif " + (objectiveIndex + 1) + " complété par " + player.getName());
         // Vérifier si tous les objectifs sont complétés
         if (completedCount >= totalObjectives) {
             Win(player);
@@ -122,46 +123,6 @@ public class Helpers {
 
         getServer().broadcastMessage("§6§l" + player.getName() + " §ea terminé tous les objectifs du BINGO !");
         getServer().dispatchCommand(getServer().getConsoleSender(),"stop-bingo");
-    }
-
-    public static String GetWinConditionString() {
-        var descr = "";
-        //getLogger().info(Bingo.BingoDamageCause.name());
-        switch (Bingo.BingoWinCondition) {
-            case OBTAIN_ITEM -> {
-                return "Obtenir l'item : " + getDisplayNameForMaterial(Bingo.BingoMaterial);
-            }
-            case DEATH -> {
-                switch (Bingo.BingoDamageCause) {
-                    case FALL -> {
-                        descr = "Mourir en tombant";
-                    }
-                    case LAVA -> {
-                        descr = "Mourir dans la lave";
-                    }
-                    case DROWNING -> {
-                        descr = "Mourir noyé";
-                    }
-                    case ENTITY_ATTACK -> {
-                        descr = "Mourir tué par une entité (attaque directe donc pas de projectile/explosion/potions/laser)";
-                    }
-                    case PROJECTILE -> {
-                        descr = "Mourir à cause d'un projectile";
-                    }
-                    case SUFFOCATION -> {
-                        descr = "Mourir étouffé";
-                    }
-                    case FIRE,FIRE_TICK -> {
-                        descr = "Mourir brûlé";
-                    }
-                    default -> {
-                        descr = Bingo.BingoDamageCause.name();
-                    }
-                }
-                return "Mourir de la manière suivante : " + descr;
-            }
-        }
-        return "Condition de victoire inconnue";
     }
 
      private static void deleteWorldFolder(String worldName) {

@@ -3,5 +3,16 @@ package zibouliman.zibouli.bingo.utils;
 public enum WinCondition {
     OBTAIN_ITEM,
     DEATH,
-    ACTION
+    ENCHANT,
+    KILL,
+    BIOME,
+    RENAME,
+    NETHER,
+    BASTION,
+    FORTRESS,
+    DIAMOND_ARMOR,
+    ADVANCEMENT
+
+
+
 }

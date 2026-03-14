@@ -51,6 +51,20 @@ public class DeathHandler implements Listener {
                     return;
                 }
             }
+            if (objective.getType() == WinCondition.BIOME) {
+                if (player.getLocation().getBlock().getBiome() == objective.getBiome()) {
+                    // Vérifier si cet objectif n'a pas déjà été complété par ce joueur
+                    if (Bingo.PlayerObjectivesCompleted.containsKey(player.getUniqueId()) &&
+                        Bingo.PlayerObjectivesCompleted.get(player.getUniqueId()).contains(i)) {
+                        continue; // Objectif déjà complété, passer au suivant
+                    }
+
+                    // Marquer l'objectif comme complété
+                    markObjectiveCompleted(player, i);
+                    return;
+                }
+            }
+
         }
     }
 }

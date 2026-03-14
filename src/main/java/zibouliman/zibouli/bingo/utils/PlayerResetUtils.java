@@ -9,6 +9,7 @@ import org.bukkit.advancement.AdvancementProgress;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import zibouliman.zibouli.bingo.Bingo;
 
 import java.util.ArrayList;
 
@@ -17,17 +18,24 @@ public final class PlayerResetUtils {
     private PlayerResetUtils() {
     }
 
-    public static void resetForGameStart() {
+    public static void resetForGameStart(World w) {
+        if (w == null) {
+            return;
+        }
+
         resetAllAdvancements();
-            Bukkit.getOnlinePlayers().forEach(player -> {
-                player.setHealth(player.getAttribute(Attribute.MAX_HEALTH).getDefaultValue());
-                player.setFoodLevel(20);
-                player.setSaturation(5);
-                player.setExhaustion(0);
-                player.setFireTicks(0);
-                player.getInventory().clear();
-                player.getInventory().setItem(0, new ItemStack(Material.BREAD,64));
-            });
+        Bukkit.getOnlinePlayers().forEach(player -> {
+            player.setHealth(player.getAttribute(Attribute.MAX_HEALTH).getDefaultValue());
+            player.setFoodLevel(20);
+            player.setSaturation(5);
+            player.setExhaustion(0);
+            player.setFireTicks(0);
+            player.setTotalExperience(0);
+            player.getInventory().clear();
+            Bingo.ItemsAtBeginning.add(new ItemStack(Material.BREAD,64));
+            Bingo.ItemsAtBeginning.forEach(item-> player.getInventory().addItem(item));
+            player.setRespawnLocation(w.getSpawnLocation(),true);
+        });
     }
 
     public static void resetAllAdvancements() {
@@ -60,4 +68,3 @@ public final class PlayerResetUtils {
         return list;
     }
 }
-

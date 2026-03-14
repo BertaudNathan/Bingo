@@ -60,8 +60,214 @@ Settings:
           - MINECART_WITH_COMMAND_BLOCK
           - MINECART_WITH_SPAWNER
           - ORE
+          - WAXED_BLOCK_OF_COPPER
+          - EXPOSED_COPPER
+          - WAXED_EXPOSED_COPPER
+          - WEATHERED_COPPER
+          - WAXED_WEATHERED_COPPER
+          - OXIDIZED_COPPER
+          - WAXED_OXIDIZED_COPPER
+          - WAXED_CUT_COPPER
+          - EXPOSED_CUT_COPPER
+          - WAXED_EXPOSED_CUT_COPPER
+          - WEATHERED_CUT_COPPER
+          - WAXED_WEATHERED_CUT_COPPER
+          - OXIDIZED_CUT_COPPER
+          - WAXED_OXIDIZED_CUT_COPPER
+          - WAXED_CUT_COPPER_SLAB
+          - EXPOSED_CUT_COPPER_SLAB
+          - WAXED_EXPOSED_CUT_COPPER_SLAB
+          - WEATHERED_CUT_COPPER_SLAB
+          - WAXED_WEATHERED_CUT_COPPER_SLAB
+          - OXIDIZED_CUT_COPPER_SLAB
+          - WAXED_OXIDIZED_CUT_COPPER_SLAB
+          - WAXED_CUT_COPPER_STAIRS
+          - EXPOSED_CUT_COPPER_STAIRS
+          - WAXED_EXPOSED_CUT_COPPER_STAIRS
+          - WEATHERED_CUT_COPPER_STAIRS
+          - WAXED_WEATHERED_CUT_COPPER_STAIRS
+          - OXIDIZED_CUT_COPPER_STAIRS
+          - WAXED_OXIDIZED_CUT_COPPER_STAIRS
+          - WAXED_COPPER_BULB
+          - WEATHERED_COPPER_BULB
+          - WAXED_WEATHERED_COPPER_BULB
+          - EXPOSED_COPPER_BULB
+          - WAXED_EXPOSED_COPPER_BULB
+          - OXIDIZED_COPPER_BULB
+          - WAXED_OXIDIZED_COPPER_BULB
+          - WAXED_COPPER_DOOR
+          - WEATHERED_COPPER_DOOR
+          - WAXED_WEATHERED_COPPER_DOOR
+          - EXPOSED_COPPER_DOOR
+          - WAXED_EXPOSED_COPPER_DOOR
+          - OXIDIZED_COPPER_DOOR
+          - WAXED_OXIDIZED_COPPER_DOOR
+          - WAXED_COPPER_TRAPDOOR
+          - WEATHERED_COPPER_TRAPDOOR
+          - WAXED_WEATHERED_COPPER_TRAPDOOR
+          - EXPOSED_COPPER_TRAPDOOR
+          - WAXED_EXPOSED_COPPER_TRAPDOOR
+          - OXIDIZED_COPPER_TRAPDOOR
+          - WAXED_OXIDIZED_COPPER_TRAPDOOR
+          - WAXED_CHISELED_COPPER
+          - WEATHERED_CHISELED_COPPER
+          - WAXED_WEATHERED_CHISELED_COPPER
+          - EXPOSED_CHISELED_COPPER
+          - WAXED_EXPOSED_CHISELED_COPPER
+          - OXIDIZED_CHISELED_COPPER
+          - WAXED_OXIDIZED_CHISELED_COPPER
+          - WAXED_COPPER_GRATE
+          - WEATHERED_COPPER_GRATE
+          - WAXED_WEATHERED_COPPER_GRATE
+          - EXPOSED_COPPER_GRATE
+          - WAXED_EXPOSED_COPPER_GRATE
+          - OXIDIZED_COPPER_GRATE
+          - WAXED_OXIDIZED_COPPER_GRATE
+          - WAXED_COPPER_CHEST
+          - WEATHERED_COPPER_CHEST
+          - WAXED_WEATHERED_COPPER_CHEST
+          - EXPOSED_COPPER_CHEST
+          - WAXED_EXPOSED_COPPER_CHEST
+          - OXIDIZED_COPPER_CHEST
+          - WAXED_OXIDIZED_COPPER_CHEST
+          - WAXED_LIGHTNING_ROD
+          - EXPOSED_LIGHTNING_ROD
+          - WAXED_EXPOSED_LIGHTNING_ROD
+          - WEATHERED_LIGHTNING_ROD
+          - WAXED_WEATHERED_LIGHTNING_ROD
+          - OXIDIZED_LIGHTNING_ROD
+          - WAXED_OXIDIZED_LIGHTNING_ROD
+          - WAXED_COPPER_GOLEM_STATUE
+          - EXPOSED_COPPER_GOLEM_STATUE
+          - WAXED_EXPOSED_COPPER_GOLEM_STATUE
+          - WEATHERED_COPPER_GOLEM_STATUE
+          - WAXED_WEATHERED_COPPER_GOLEM_STATUE
+          - OXIDIZED_COPPER_GOLEM_STATUE
+          - WAXED_OXIDIZED_COPPER_GOLEM_STATUE
+          - WAXED_COPPER_LANTERN
+          - EXPOSED_COPPER_LANTERN
+          - WAXED_EXPOSED_COPPER_LANTERN
+          - WEATHERED_COPPER_LANTERN
+          - WAXED_WEATHERED_COPPER_LANTERN
+          - OXIDIZED_COPPER_LANTERN
+          - WAXED_OXIDIZED_COPPER_LANTERN
+          - WAXED_COPPER_BARS
+          - EXPOSED_COPPER_BARS
+          - WAXED_EXPOSED_COPPER_BARS
+          - WEATHERED_COPPER_BARS
+          - WAXED_WEATHERED_COPPER_BARS
+          - OXIDIZED_COPPER_BARS
+          - WAXED_OXIDIZED_COPPER_BARS
+          - WAXED_COPPER_CHAIN
+          - EXPOSED_COPPER_CHAIN
+          - WAXED_EXPOSED_COPPER_CHAIN
+          - WEATHERED_COPPER_CHAIN
+          - WAXED_WEATHERED_COPPER_CHAIN
+          - OXIDIZED_COPPER_CHAIN
+          - WAXED_OXIDIZED_COPPER_CHAIN
+          - SHULKER_BOX
+          - WHITE_SHULKER_BOX
+          - ORANGE_SHULKER_BOX
+          - MAGENTA_SHULKER_BOX
+          - LIGHT_BLUE_SHULKER_BOX
+          - YELLOW_SHULKER_BOX
+          - LIME_SHULKER_BOX
+          - PINK_SHULKER_BOX
+          - GRAY_SHULKER_BOX
+          - LIGHT_GRAY_SHULKER_BOX
+          - CYAN_SHULKER_BOX
+          - PURPLE_SHULKER_BOX
+          - BLUE_SHULKER_BOX
+          - BROWN_SHULKER_BOX
+          - GREEN_SHULKER_BOX
+          - RED_SHULKER_BOX
+          - BLACK_SHULKER_BOX
+          - SHULKER_SHELL
+          - CHORUS_FLOWER
+          - CHORUS_FRUIT
+          - CHORUS_FRUIT_POPPED
+          - CHORUS_PLANT
+          - CANDLE_CAKE
+          - WHITE_CANDLE_CAKE
+          - ORANGE_CANDLE_CAKE
+          - MAGENTA_CANDLE_CAKE
+          - LIGHT_BLUE_CANDLE_CAKE
+          - YELLOW_CANDLE_CAKE
+          - LIME_CANDLE_CAKE
+          - PINK_CANDLE_CAKE
+          - GRAY_CANDLE_CAKE
+          - LIGHT_GRAY_CANDLE_CAKE
+          - CYAN_CANDLE_CAKE
+          - PURPLE_CANDLE_CAKE
+          - BLUE_CANDLE_CAKE
+          - BROWN_CANDLE_CAKE
+          - GREEN_CANDLE_CAKE
+          - RED_CANDLE_CAKE
+          - BLACK_CANDLE_CAKE
+          - FIRE
+          - FROSTED_ICE
+          - FARMLAND
       Silk_Touch:
-          -
+          - AMETHYST_CLUSTER
+          - AMETHYST_SHARD
+          - BUDDING_AMETHYST
+          - CHISELED_BOOKSHELF
+          - COBWEB
+          - COPPER_ORE
+          - CORAL_BLOCKS
+          - CORAL
+          - CORAL FANS
+          - CREAKING_HEART
+          - RESIN_CLUMP
+          - DIAMOND_ORE
+          - DIAMOND
+          - DOUBLE_SLAB
+          - EMERALD_ORE
+          - GILDED_BLACKSTONE
+          - GLASS_PANE
+          - GLASS
+          - GLOWSTONE
+          - GRASS_BLOCK
+          - DIRT_PATH
+          - ICE
+          - INFESTED_BLOCK
+          - IRON_ORE
+          - LAPIS_LAZULI_ORE
+          - SAPLINGS
+          - MELON
+          - MELON_STEM
+          - MONSTER_SPAWNER
+          - brown_mushroom_block
+          - red_mushroom_block
+          - MUSHROOM_STEM
+          - NETHER_GOLD_ORE
+          - NETHER_QUARTZ_ORE
+          - NYLIUM
+          - NETHER_WART
+          - OMINOUS_VAULT
+          - PACKED_ICE
+          - PODZOL
+          - POTATOES
+          - POWDER_SNOW
+          - PUMPKIN_STEM
+          - REDSTONE_ORE
+          - REINFORCED_DEEPSLATE
+          - SCULK
+          - SCULK_CATALYST
+          - SCULK_SENSOR
+          - SCULK_SHRIEKER
+          - SCULK_VEIN
+          - SEA_LANTERN
+          - SNOW
+          - SNOW_BLOCK
+          - SOUL_CAMPFIRE
+          - STONE
+          - SUSPICIOUS_GRAVEL
+          - SUSPICIOUS_SAND
+          - TURTLE_EGG
+          - TWISTING_VINES
+          - WEEPING_VINES
+          - WHEAT
   RandomKillMethods:
     Whitelisted:
       List:
@@ -71,3 +277,30 @@ Settings:
           - LAVA
           - DROWNING
           - SUFFOCATION
+  RandomBiomes:
+    BlackListed:
+      List:
+          - THE_VOID
+          - THE_END
+          - END_BARRENS
+          - END_HIGHLANDS
+          - END_MIDLANDS
+          - END_SPRINGS
+          - END_STONE_PEAKS
+          - ENDER_WORLDS
+  RandomAdvancements:
+      Whitelisted:
+          List:
+              - story/shiny_gear : "Equipper une pièce d'armure en Diamant"
+              - story/deflect_arrow : "Déflecter une flèche avec un bouclier"
+              - nether/find_fortress : "Trouver une forteresse du Nether"
+              - nether/find_bastion : "Trouver un bastion du Nether"
+              - nether/root : "Renter dans le nether"
+              - adventure/ol_betsy : "Tirer avec une arbalete"
+              - adventure/sleep_in_bed : "Dormir dans un lit"
+              - adventure/shoot_arrow : "Tirer une flèche sur un monstre/joueur"
+              - adventure/spear_many_mobs : "Toucher 5 monstres en une seule attaque avec une lance"
+              - husbandry/breed_an_animal : "Faire se reproduire deux animaux"
+              - husbandry/tame_an_animal : "Apprivoiser un animal"
+              - husbandry/tactical_fishing : "Attraper un poisson avec un seau"
+              - adventure/trade : "Faire un échange avec un villageois"
